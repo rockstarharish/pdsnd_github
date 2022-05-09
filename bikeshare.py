@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import time
 from os import system
+from IPython.display import display
 CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
@@ -188,7 +189,7 @@ def main():
         n = 0
         while True :
             if user_input.lower() == 'yes':
-                print(df.iloc[n : n + 5])
+                display(df.iloc[n : n + 5])
                 n += 5
                 user_input = input('\nWould you like to see more data? Enter yes or no.\n')
                 while user_input.lower() not in enter:
