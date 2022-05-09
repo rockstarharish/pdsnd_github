@@ -20,8 +20,11 @@ The user selects the filters that are going to be applied to the database.
 The user can chose from the list of options for the statistics the user like to calculate based on the filer applied on data 
 
 
-### Files used
-Include the files used
+# Files used
+- [bikeshare.py](https://github.com/rockstarharish/pdsnd_github/blob/documentation/bikeshare.py)
+- [chicago.csv]
+- [new_york_city.csv]
+- [washington.csv]
 
 ### Credits
 It's important to give proper credit. Add links to any repo that inspired you or blogposts you consulted.
