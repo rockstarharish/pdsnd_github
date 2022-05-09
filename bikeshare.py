@@ -2,6 +2,8 @@ import time
 import pandas as pd
 import numpy as np
 import time
+from os import system
+from IPython.display import display
 CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
@@ -21,7 +23,7 @@ def get_filters():
     while city not in CITY_DATA:
         print("Oops.. Invalid city name. Please try again")
         city=input().lower()
-        
+
 
     # get user input for month (all, january, february, ... , june)
     months = ['january','february','march','april','may','june','all']
@@ -54,19 +56,19 @@ def load_data(city, month, day):
         df - Pandas DataFrame containing city data filtered by month and day
     """
     df = pd.read_csv(CITY_DATA[city])
-    
+
     df['Start Time'] = pd.to_datetime(df['Start Time'])
     df['month'] = df['Start Time'].dt.month
     df['day_of_week'] = df['Start Time'].dt.weekday_name
 
     if month != 'all':
         months = ['january','february','march','april','may','june']
-        month = months.index(month) + 1 
+        month = months.index(month) + 1
         df = df[df['month'] == month]
-        
+
     if day != 'all':
         df = df[df['day_of_week'] == day.title()]
-        
+
     return df
 
 
@@ -75,19 +77,19 @@ def time_stats(df):
 
     print('\nCalculating The Most Frequent Times of Travel...\n')
     start_time = time.time()
-    
+
     # convert the Start Time column to datetime
     df['Start Time'] = pd.to_datetime(df['Start Time'])
 
     # display the most common month
- 
+
     df['month'] = df['Start Time'].dt.month
     most_common_month = df['month'].mode()[0]
     months = ['January','February','March','April','May','June']
     print("most common month: ", months[most_common_month-1])
-      
-          
-        
+
+
+
 
     # display the most common day of week
     df['day_of_week'] = df['Start Time'].dt.dayofweek
@@ -166,15 +168,17 @@ def user_stats(df):
 
 def main():
     while True:
+        # Function to clear the screen to improve user experience
+        system('clear')
         city, month, day = get_filters()
         df = load_data(city, month, day)
-        
-        
+
+
         time_stats(df)
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
-        
+
         #To prompt the user whether they would like want to see the raw data
         enter = ['yes','no']
         user_input = input('Would you like to see more data? Enter yes or no.\n')
@@ -185,7 +189,7 @@ def main():
         n = 0
         while True :
             if user_input.lower() == 'yes':
-                print(df.iloc[n : n + 5])
+                display(df.iloc[n : n + 5])
                 n += 5
                 user_input = input('\nWould you like to see more data? Enter yes or no.\n')
                 while user_input.lower() not in enter:
@@ -197,7 +201,7 @@ def main():
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
             break
-        
+
 
 
 if __name__ == "__main__":
